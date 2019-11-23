@@ -8,16 +8,16 @@ import {
 } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import { connect } from 'react-redux'
-import Button from '../common/Button'
-import Input from '../common/Input'
-import Title from '../common/Title'
+import Button from '../components/Button'
+import Input from '../components/Input'
+import Title from '../components/Title'
 import { createUser } from '../../actions/AuthActions'
 
 class Signup extends Component {
 
   state = {
     user: '',
-    password: ''
+    password: '',
   }
 
   onChangeUser = text => {
@@ -77,7 +77,7 @@ class Signup extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
 })
 
 export default connect(

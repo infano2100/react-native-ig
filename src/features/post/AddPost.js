@@ -3,7 +3,7 @@ import { Text, Image, View, FlatList, TouchableOpacity, ScrollView, StyleSheet }
 import data from './images/data.json';
 import { connect } from 'react-redux';
 import { selectImage } from '../../actions/PostActions';
-import Header from '../common/Header';
+import Header from '../components/Header';
 import { Actions } from 'react-native-router-flux';
 
 class AddPost extends Component {

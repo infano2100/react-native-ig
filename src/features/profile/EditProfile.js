@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, Image, TouchableOpacity, TextInput, ScrollView, Platform, StyleSheet } from 'react-native';
-import Header from '../common/Header';
+import Header from '../components/Header';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { onSaveChanges } from '../../actions/ProfileActions';

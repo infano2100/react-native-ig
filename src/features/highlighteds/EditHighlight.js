@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Image, TextInput, StyleSheet } from 'react-native';
-import Header from '../common/Header';
+import Header from '../components/Header';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { onCreateHighlight } from '../../actions/HighlightActions';

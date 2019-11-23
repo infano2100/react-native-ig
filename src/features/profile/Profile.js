@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { fetchProfile } from '../../actions/ProfileActions';
 import { fetchPosts } from '../../actions/PostActions';
 import { fetchHighlights } from '../../actions/HighlightActions';
-import Button from '../common/Button';
-import Header from '../common/Header';
+import Button from '../components/Button';
+import Header from '../components/Header';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Post from '../post/Post';

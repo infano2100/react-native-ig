@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Text, View, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import Input from '../common/Input';
-import Button from '../common/Button';
+import Input from '../components/Input';
+import Button from '../components/Button';
 import { addPost } from '../../actions/PostActions';
 import { Actions } from 'react-native-router-flux';
 

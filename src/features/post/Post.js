@@ -3,7 +3,7 @@ import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { like, dislike, sendMessage } from '../../actions/PostActions';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import Input from '../common/Input';
+import Input from '../components/Input';
 
 class Post extends Component {
   state = {

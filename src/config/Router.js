@@ -6,28 +6,30 @@ import {
   Tabs,
 } from 'react-native-router-flux'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import EditProfile from '../components/profile/EditProfile'
-import CreateHighlight from '../components/highlighteds/CreateHighlight'
-import EditHighlight from '../components/highlighteds/EditHighlight'
-import Highlight from '../components/highlighteds/Highlight'
+import EditProfile from '../features/profile/EditProfile'
+import CreateHighlight from '../features/highlighteds/CreateHighlight'
+import EditHighlight from '../features/highlighteds/EditHighlight'
+import Highlight from '../features/highlighteds/Highlight'
 
-import Login from '../components/auth/Login'
-import Signup from '../components/auth/Signup'
-import AddPost from '../components/post/AddPost'
-import ConfigPost from '../components/post/ConfigPost'
-import Home from '../components/home/Home'
-import Explore from '../components/explore/Explore'
-import Profile from '../components/profile/Profile'
+import Login from '../features/auth/Login'
+import Signup from '../features/auth/Signup'
+import AddPost from '../features/post/AddPost'
+import ConfigPost from '../features/post/ConfigPost'
+import Home from '../features/home/Home'
+import Explore from '../features/explore/Explore'
+import Profile from '../features/profile/Profile'
 
 
-
-const HomeIcon = () => <Ionicons name="md-home" size={25} />
-const ExploreIcon = () => <Ionicons name="md-search" size={25} />
-const AddPostIcon = () => <EvilIcons name="plus" size={25} />
-const ProfileIcon = () => <Icon name="user" size={25} />
+const HomeIcon = ({focused}) =>  <IconMaterial name={focused ? "home" : "home-outline" } size={25} />
+const ExploreIcon = ({focused}) => {
+  return focused ? <Icon name="search" size={25} /> : <Ionicons name="md-search" size={25} />
+}
+const AddPostIcon = () => <Icon name="plus-square-o" size={25} />
+const ProfileIcon = ({focused}) => <Icon name={focused ? "user" : "user-o" } size={25} />
+const ActivityIcon = ({focused}) =>  <Icon name={focused ? "heart" : "heart-o" } size={25} />
 
 const RouterComponent = () => (
   <Router>
@@ -38,9 +40,10 @@ const RouterComponent = () => (
       </Stack>
       <Stack key="app" hideNavBar panHandlers={null}>
         <Tabs showLabel={false}>
-          <Scene key="home" component={Home} icon={HomeIcon} title="Home" />
-          <Scene key="addpost" component={AddPost} icon={AddPostIcon} hideNavBar hideTabBar />
+          <Scene key="home" component={Home} icon={HomeIcon} title="Home"/>
           <Scene key="explore" component={Explore} icon={ExploreIcon} />
+          <Scene key="addpost" component={AddPost} icon={AddPostIcon} hideNavBar hideTabBar />
+          <Scene key="activity" component={Profile} icon={ActivityIcon} />
           <Scene key="profile" component={Profile} icon={ProfileIcon} hideNavBar />
         </Tabs>
         <Scene key="configPost" component={ConfigPost} />
