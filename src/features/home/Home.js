@@ -4,33 +4,36 @@ import {
   View, 
   ScrollView, 
   StyleSheet,
- } from 'react-native'
+} from 'react-native'
 import { connect } from 'react-redux'
+import _ from 'lodash'
 import { fetchPosts } from '../../actions/PostActions'
 import Post from '../post/Post'
 
 class Home extends Component {
   state = {
-    posts: []
+    posts: [],
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchPosts()
   }
 
-  componentWillReceiveProps(nextProps) {
+
+  static getDerivedStateFromProps(nextProps) {
     if (this.props !== nextProps) {
-      this.setState({
-        posts: nextProps.posts.posts
-      })
+      return {
+        posts: nextProps.posts.posts,
+      }
     }
   }
 
   renderPosts() {
-    if (this.state.posts === undefined || this.state.posts.length === 0) {
+    const { posts, isLoad } = this.state
+    if (_.isEmpty(posts)) {
       return (
         <View>
-          <Text>You don't have any post here, may you want to add one?</Text>
+           <Text>You don't have any post here, may you want to add one?</Text>
         </View>
       )
     } else {
@@ -64,10 +67,10 @@ export default connect(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   ScrollContainer: {
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   }
 })
