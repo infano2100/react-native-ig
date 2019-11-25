@@ -5,26 +5,40 @@ import {
   Image, 
   ScrollView, 
   TouchableOpacity, 
-  StyleSheet 
+  StyleSheet,
 } from 'react-native'
 import { connect } from 'react-redux'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Actions } from 'react-native-router-flux'
-import { fetchProfile } from '../../actions/ProfileActions'
 import { fetchPosts } from '../../actions/PostActions'
+import { fetchProfile } from '../../actions/ProfileActions'
 import { fetchHighlights } from '../../actions/HighlightActions'
 import Button from '../components/Button'
 import Header from '../components/Header'
 import Post from '../post/Post'
 import HighlightIcon from '../highlighteds/HighlightIcon'
+import Images from '../../assets/images'
+
 class Profile extends Component {
   state = {
     show: {
       grid: true,
       full: false,
       pinned: false,
-      saved: false
-    }
+      saved: false,
+    },
+    name_profile: '',
+    username: '',
+    userpic: '',
+    bio: '',
+    web: '',
+    posts: '',
+    followers: '',
+    following: '',
+    all_posts: '',
+    postsKeys: '',
+    postsArray: '',
+    highlightsArray: '',
   }
 
   componentDidMount() {
@@ -32,31 +46,29 @@ class Profile extends Component {
     this.props.fetchHighlights()
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props !== nextProps) {
-      console.log('userpic',nextProps.profile.userpic)
-      this.setState({
+  static getDerivedStateFromProps(nextProps, prevState){
+    if(nextProps !== prevState && nextProps.profile){
+      return {
         name_profile: nextProps.profile.name_profile,
         username: nextProps.profile.username,
         userpic: nextProps.profile.userpic,
         bio: nextProps.profile.bio,
+        web: nextProps.profile.web,
         posts: nextProps.profile.posts_number ? nextProps.profile.posts_number : 0,
         followers: nextProps.profile.followers ? nextProps.profile.followers : 0,
         following: nextProps.profile.following ? nextProps.profile.following : 0,
         all_posts: nextProps.posts,
         postsKeys: Object.keys(nextProps.posts),
         postsArray: Object.values(nextProps.posts),
-        highlightsArray: nextProps.highlights
-      })
-    }
-  }
+        highlightsArray: nextProps.highlights,
+      }
+   }
+   else return null;
+ }
 
+ 
   renderImage = () => {
-    if (this.state.userpic) {
-      return <Image style={{ width: 100, height: 100, borderRadius: 50 }} source={{ uri: this.state.userpic }} />
-    } else {
-      return <Text>Loading image...</Text>
-    }
+    return <Image style={styles.profileImg} source={ this.state.userpic ? { uri: this.state.userpic } : Images.USER }/>
   }
 
   showGrid = () => {
@@ -139,7 +151,7 @@ class Profile extends Component {
       <View style={styles.viewCountPosts}>
       { dataCount.map((val) => {
         return (
-          <View style={styles.viewTextCount}>
+          <View key={val.name} style={styles.viewTextCount}>
             <Text style={styles.textCount}>{val.count}</Text>
             <Text style={styles.textStatusPosts}>{val.name}</Text>
           </View>
@@ -150,6 +162,7 @@ class Profile extends Component {
   }
 
   render() {
+    const { name_profile, bio, web } = this.state
     return (
       <View style={styles.container}>
         <Header title={this.state.username} />
@@ -161,12 +174,9 @@ class Profile extends Component {
             </View>
           </View>
           <View style={styles.viewButtomEdit}>
-            <Text style={styles.textName}>
-              {this.state.name_profile}name
-            </Text>
-            <Text style={styles.textBio}>
-              {this.state.bio}bio
-            </Text>
+            <Text style={styles.textName}> {name_profile} </Text>
+            <Text style={styles.textBio}> {bio} </Text>
+            <Text style={styles.textBio}> {web} </Text>
             <Button
               styles={styles.buttonEdit}
               textButton="Edit profile"
@@ -196,8 +206,8 @@ class Profile extends Component {
           <View style={styles.typeView}>
             <TouchableOpacity onPress={this.showGrid}>
               <View>
-                <Ionicons
-                  name="md-grid"
+                <MaterialCommunityIcons
+                  name="grid"
                   size={30}
                   color={this.state.show.grid ? '#00a8ff' : '#dcdde1'}
                   style={styles.iconSelcet}
@@ -206,9 +216,9 @@ class Profile extends Component {
             </TouchableOpacity>
             <TouchableOpacity onPress={this.showFull}>
               <View>
-                <Ionicons
-                  name="md-square-outline"
-                  size={30}
+                <MaterialCommunityIcons
+                  name="account-box-outline"
+                  size={35}
                   color={this.state.show.full ? '#00a8ff' : '#dcdde1'}
                   style={styles.iconSelcet}
                 />
@@ -232,7 +242,11 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchProfile, fetchPosts, fetchHighlights }
+  { 
+    fetchProfile,
+    fetchPosts, 
+    fetchHighlights,
+  }
 )(Profile)
 
 const styles = StyleSheet.create({
@@ -324,4 +338,9 @@ const styles = StyleSheet.create({
     marginTop: 10, 
     marginBottom: 30,
   },
+  profileImg: { 
+    width: 100, 
+    height: 100, 
+    borderRadius: 50,
+  }
 })

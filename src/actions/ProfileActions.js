@@ -17,9 +17,16 @@ export const fetchProfile = () => {
   }
 }
 
-export const onSaveChanges = (userpic, name_profile, username, web, bio, phone, sex) => {
+export const onSaveChanges = (
+  userpic = " ", 
+  name_profile = " ", 
+  username = " ", 
+  web = " ", 
+  bio = " ", 
+  phone = " ", 
+  sex = " ",
+) => {
   const { currentUser } = firebase.auth()
-
   return dispatch => {
     firebase
       .database()
@@ -39,5 +46,7 @@ export const onSaveChanges = (userpic, name_profile, username, web, bio, phone, 
         })
         Actions.profile()
       })
+      Actions.profile()
+
   }
 }

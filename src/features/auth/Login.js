@@ -57,7 +57,7 @@ class Login extends Component {
           }>
               <Text> Don't have an account? </Text>
               <TouchableOpacity onPress={this.onPressSignUp}>
-                <Text style={styles.textSingUp}> Sign Up.</Text>
+                <Text style={styles.textSingUp}> Sign Up. </Text>
               </TouchableOpacity>
           </View>
         </View>
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   textErrorLoging: {
     color: 'red',
