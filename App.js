@@ -3,7 +3,7 @@ import firebase from 'firebase'
 import Main from './src/config/Main'
 
 export default class App extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const config = {
       apiKey: "AIzaSyCnbNC7ujyuz7wGKQl0VsNXPO9_831IhPM",
       authDomain: "react-native-ig.firebaseapp.com",

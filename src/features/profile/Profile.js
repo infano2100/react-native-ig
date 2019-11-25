@@ -10,6 +10,7 @@ import {
 import { connect } from 'react-redux'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Actions } from 'react-native-router-flux'
+import Modal, { ModalContent, ModalTitle } from 'react-native-modals'
 import { fetchPosts } from '../../actions/PostActions'
 import { fetchProfile } from '../../actions/ProfileActions'
 import { fetchHighlights } from '../../actions/HighlightActions'
@@ -39,6 +40,7 @@ class Profile extends Component {
     postsKeys: '',
     postsArray: '',
     highlightsArray: '',
+    bottomModal: false,
   }
 
   componentDidMount() {
@@ -161,11 +163,55 @@ class Profile extends Component {
     )
   }
 
+  showModal = () => this.setState({ bottomModal:true })
+
+  renderShowModal = () => {
+    const listMenu = [
+      {name: 'Setting'},
+      {name: 'Archive'},
+      {name: 'Your Activity'},
+      {name: 'Nametag'},
+      {name: 'Saved'},
+      {name: 'Colse Friends'},
+      {name: 'Discover People'},
+      {name: 'Open Facebook'},
+    ]
+    return (
+      <Modal.BottomModal
+          visible={this.state.bottomModal}
+          onTouchOutside={() => this.setState({ bottomModal: false })}
+          height={0.7}
+          // modalStyle={{  }}
+        >
+          <ModalContent
+            style={{
+              backgroundColor: 'fff',
+              // height: '40%',
+            }}
+          > 
+          {listMenu.map((val) => {
+            return (
+              <View key={val.name} style={styles.itemMenu}>
+                <Text> {val.name} </Text>
+              </View>
+            )
+          })}
+          
+          </ModalContent>
+        </Modal.BottomModal>
+    )
+  }
+
   render() {
     const { name_profile, bio, web } = this.state
     return (
       <View style={styles.container}>
-        <Header title={this.state.username} />
+        <Header 
+          title={this.state.username} 
+          onNext={this.showModal}
+          menu
+        />
+       { this.renderShowModal() }
         <ScrollView contentContainerStyle={{ justifyContent: 'center' }} showsVerticalScrollIndicator={false}>
           <View style={styles.picAndInfo}>
             {this.renderImage()}
@@ -257,7 +303,7 @@ const styles = StyleSheet.create({
   picAndInfo: {
     flexDirection: 'row',
     margin: 5,
-    marginTop: 10,
+    marginTop: 15,
     marginLeft: 15
   },
   userBioAndStories: {
@@ -342,5 +388,12 @@ const styles = StyleSheet.create({
     width: 100, 
     height: 100, 
     borderRadius: 50,
-  }
+  },
+  itemMenu: { 
+    margin: 10, 
+    width: '100%', 
+    height: 35, 
+    borderBottomColor: '#dcdde1', 
+    borderBottomWidth: 1,
+  },
 })

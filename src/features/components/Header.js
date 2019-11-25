@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import FeatherIcons from 'react-native-vector-icons/Feather'
 import { 
   View, 
   Text, 
@@ -9,6 +10,21 @@ import {
 
 const Header = props => {
   return (
+    props.menu ?
+    <View style={styles.container}>
+      <View style={styles.viewTextCancel}/>
+      <Text style={styles.textTitel}>{props.title}</Text>
+      {props.onNext ? (
+        <View style={styles.viewTextDone}>
+          <TouchableOpacity onPress={props.onNext} style={styles.margin15}>
+            <View>
+              <FeatherIcons name="menu" size={20}/>
+            </View>
+          </TouchableOpacity>
+        </View>
+      ) : null}
+    </View>
+    :
     <View style={styles.container}>
       {props.onCancel ? (
         <View style={styles.viewTextCancel}>
@@ -36,6 +52,7 @@ const Header = props => {
 }
 
 Header.propTypes = {
+  menu: PropTypes.bool,
   textNext: PropTypes.string,
   textCancel: PropTypes.string,
   onCancel: PropTypes.func,
@@ -44,6 +61,7 @@ Header.propTypes = {
 }
 
 Header.defaultProps = {
+  menu: false,
   textNext: 'Next',
   textCancel: 'Cancel',
   showOnAction: true,
