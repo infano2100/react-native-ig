@@ -40,7 +40,7 @@ const RouterComponent = (props) => (
       <Stack key="app" hideNavBar panHandlers={null} initial={props.checkLogin}>
         <Tabs showLabel={false}>
           <Scene key="home" component={Home} icon={HomeIcon} title="Instagram"/>
-          <Scene key="explore" component={Explore} icon={ExploreIcon} />
+          <Scene key="explore" component={Explore} icon={ExploreIcon} hideNavBar />
           <Scene key="addpost" component={AddPost} icon={AddPostIcon} hideNavBar hideTabBar />
           <Scene key="activity" component={Profile} icon={ActivityIcon} />
           <Scene key="profile" component={Profile} icon={ProfileIcon} hideNavBar />
