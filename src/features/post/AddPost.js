@@ -5,12 +5,11 @@ import {
   View, 
   FlatList, 
   TouchableOpacity, 
-  ScrollView, 
-  StyleSheet
+  StyleSheet,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
-import data from './images/data.json'
+import CameraRoll from "@react-native-community/cameraroll"
 import { selectImage } from '../../actions/PostActions'
 import Header from '../components/Header'
 
@@ -18,37 +17,65 @@ class AddPost extends Component {
   state = {
     image: '',
     imageSelected: false,
+    images: [],
+  }
+
+  componentDidMount() {
+    this.fetchPhotoLocal()
   }
 
   onSelectImage = ({ item }) => {
     this.setState({
-      image: item.url,
+      image: item.uri,
       imageSelected: true,
+    })
+  }
+
+  fetchPhotoLocal() {
+    const configParams = {
+      first: 50,
+      assetType: 'Photos',
+      groupType: 'All',
+    }
+    if (this.state.lastCursor) {
+      configParams.after = this.state.lastCursor
+    }
+
+    CameraRoll.getPhotos(configParams).then(value => {
+      const image = value.edges.map(img => img.node.image)
+      this.setState({ images: image})
     })
   }
 
   _renderItem = ({ item }) => (
     <TouchableOpacity style={styles.miniImageContainer} onPress={() => this.onSelectImage({ item })}>
-      <View>
-        <Image source={{ uri: item.url }} style={styles.miniImage} />
+      <View key={item.uri}>
+        <Image source={{ uri: item.uri }} style={styles.miniImage} />
       </View>
     </TouchableOpacity>
   )
 
-  _keyExtractor = (item, index) => item.name
+  _keyExtractor = (item, index) => item.filename
 
   renderImage = () => {
-    if (!this.state.imageSelected) {
+    const { image, imageSelected } = this.state
+    
+    if (!imageSelected) {
       return (
         <View style={styles.mainImageContainer}>
           <Text>Select an image</Text>
         </View>
       )
     }
+    
 
     return (
       <View style={styles.mainImageContainer}>
-        <Image source={{ uri: this.state.image }} style={styles.mainImage} />
+        <Image 
+          source={{ uri: image }} 
+          style={styles.mainImage}
+          resizeMode="cover"
+        />
       </View>
     )
   }
@@ -74,15 +101,13 @@ class AddPost extends Component {
     return (
       <View style={styles.container}>
         {this.renderHeader()}
-        <ScrollView>
           {this.renderImage()}
           <FlatList 
-            data={data.images} 
+            data={this.state.images} 
             keyExtractor={this._keyExtractor} 
             renderItem={this._renderItem} 
-            numColumns={3}
+            numColumns={4}
           />
-        </ScrollView>
       </View>
     )
   }
@@ -104,19 +129,19 @@ const styles = StyleSheet.create({
     height: 300,
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 1,
   },
   mainImage: {
     width: '100%',
     height: '100%',
-    margin: 5,
   },
   miniImageContainer: {
-    width: 100,
-    height: 100,
-    margin: 5,
+    width: 90,
+    height: 90,
+    margin: 1,
   },
   miniImage: {
-    width: 100,
-    height: 100,
+    width: 90,
+    height: 90,
   },
 })

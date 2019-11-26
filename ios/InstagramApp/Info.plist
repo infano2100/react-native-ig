@@ -53,12 +53,12 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This will allow receipts to be saved automatically in your photo library</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>$(PRODUCT_NAME) wants to save photos</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Enable camera access so you can post pics directly from your camera</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to save photos to your photo gallery</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This will allow receipts to be saved automatically in your photo library</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Ionicons.ttf</string>

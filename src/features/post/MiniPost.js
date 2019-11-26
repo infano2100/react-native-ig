@@ -1,23 +1,28 @@
-import React, { Component } from 'react';
-import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { Component } from 'react'
+import { 
+  View,
+  Image, 
+  TouchableOpacity, 
+  StyleSheet
+} from 'react-native'
 
 export default class MiniPost extends Component {
   state = {
     selected: false
-  };
+  }
 
   selectPost(image) {
     this.setState({
-      selected: true
-    });
-    this.props.selectPost(image);
+      selected: true,
+    })
+    this.props.selectPost(image)
   }
 
   unselectPost(image) {
     this.setState({
-      selected: false
-    });
-    this.props.unselectPost(image);
+      selected: false,
+    })
+    this.props.unselectPost(image)
   }
 
   render() {
@@ -35,7 +40,7 @@ export default class MiniPost extends Component {
           />
         </View>
       </TouchableOpacity>
-    );
+    )
   }
 }
 
@@ -43,6 +48,6 @@ const styles = StyleSheet.create({
   image: {
     width: 122.5,
     height: 122.5,
-    margin: 1
+    margin: 1,
   }
-});
+})
