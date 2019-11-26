@@ -1,5 +1,5 @@
-import firebase from 'firebase'
 import { Actions } from 'react-native-router-flux'
+import firebase from '../config/firebase'
 import {
   AUTH_CREATE_USER,
   AUTH_CREATE_USER_FAIL,

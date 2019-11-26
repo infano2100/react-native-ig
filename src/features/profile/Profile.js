@@ -10,7 +10,8 @@ import {
 import { connect } from 'react-redux'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Actions } from 'react-native-router-flux'
-import Modal, { ModalContent, ModalTitle } from 'react-native-modals'
+import Modal, { ModalContent } from 'react-native-modals'
+import firebase from '../../config/firebase'
 import { fetchPosts } from '../../actions/PostActions'
 import { fetchProfile } from '../../actions/ProfileActions'
 import { fetchHighlights } from '../../actions/HighlightActions'
@@ -165,22 +166,30 @@ class Profile extends Component {
 
   showModal = () => this.setState({ bottomModal:true })
 
+  logout = () => {
+    firebase.auth().signOut().then(response => {
+      Actions.auth
+      this.setState({ bottomModal :false })
+    })
+  }
+
   renderShowModal = () => {
     const listMenu = [
-      {name: 'Setting'},
-      {name: 'Archive'},
-      {name: 'Your Activity'},
-      {name: 'Nametag'},
-      {name: 'Saved'},
-      {name: 'Colse Friends'},
-      {name: 'Discover People'},
-      {name: 'Open Facebook'},
+      // {name: 'Setting',},
+      // {name: 'Archive'},
+      // {name: 'Your Activity'},
+      // {name: 'Nametag'},
+      // {name: 'Saved'},
+      // {name: 'Colse Friends'},
+      // {name: 'Discover People'},
+      // {name: 'Open Facebook'},
+      {name: 'Logout', actions: this.logout},
     ]
     return (
       <Modal.BottomModal
           visible={this.state.bottomModal}
           onTouchOutside={() => this.setState({ bottomModal: false })}
-          height={0.7}
+          height={0.8}
           // modalStyle={{  }}
         >
           <ModalContent
@@ -192,7 +201,9 @@ class Profile extends Component {
           {listMenu.map((val) => {
             return (
               <View key={val.name} style={styles.itemMenu}>
-                <Text> {val.name} </Text>
+                <TouchableOpacity onPress={val.actions}>
+                  <Text> {val.name} </Text>
+                </TouchableOpacity>
               </View>
             )
           })}

@@ -1,5 +1,5 @@
 import { PROFILE_FETCH, PROFILE_EDIT } from './types'
-import firebase from 'firebase'
+import firebase from '../config/firebase'
 import { Actions } from 'react-native-router-flux'
 
 export const fetchProfile = () => {

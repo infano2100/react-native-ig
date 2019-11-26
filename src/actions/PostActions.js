@@ -1,6 +1,6 @@
-import firebase from 'firebase'
 import { Actions } from 'react-native-router-flux'
 import _ from 'lodash'
+import firebase from '../config/firebase'
 import { 
   POST_FETCH_ALL, 
   POST_ADD, 

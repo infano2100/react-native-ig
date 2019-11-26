@@ -22,7 +22,6 @@ import Home from '../features/home/Home'
 import Explore from '../features/explore/Explore'
 import Profile from '../features/profile/Profile'
 
-
 const HomeIcon = ({focused}) =>  <IconMaterial name={focused ? "home" : "home-outline" } size={25} />
 const ExploreIcon = ({focused}) => {
   return focused ? <Icon name="search" size={25} /> : <Ionicons name="md-search" size={25} />
@@ -31,14 +30,14 @@ const AddPostIcon = () => <Icon name="plus-square-o" size={25} />
 const ProfileIcon = ({focused}) => <Icon name={focused ? "user" : "user-o" } size={25} />
 const ActivityIcon = ({focused}) =>  <Icon name={focused ? "heart" : "heart-o" } size={25} />
 
-const RouterComponent = () => (
+const RouterComponent = (props) => (
   <Router>
     <Stack key="root">
-      <Stack key="auth" hideNavBar>
+      <Stack key="auth" hideNavBar initial={props.checkLogin}>
         <Scene key="login" component={Login} />
         <Scene key="signup" component={Signup} />
       </Stack>
-      <Stack key="app" hideNavBar panHandlers={null}>
+      <Stack key="app" hideNavBar panHandlers={null} initial={props.checkLogin}>
         <Tabs showLabel={false}>
           <Scene key="home" component={Home} icon={HomeIcon} title="Instagram"/>
           <Scene key="explore" component={Explore} icon={ExploreIcon} />

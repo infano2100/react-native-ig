@@ -1,8 +1,9 @@
-import { HIGHLIGHT_CREATE, HIGHLIGHT_FETCH_ALL } from './types';
-import firebase from 'firebase';
+import { HIGHLIGHT_CREATE, HIGHLIGHT_FETCH_ALL } from './types'
+import firebase from '../config/firebase'
+
 
 export const fetchHighlights = () => {
-  const { currentUser } = firebase.auth();
+  const { currentUser } = firebase.auth()
 
   return dispatch => {
     firebase
@@ -10,16 +11,16 @@ export const fetchHighlights = () => {
       .ref(`/users/${currentUser.uid}/highlights`)
       .on('value', snapshot => {
         if (snapshot.val() === null || snapshot.val() === undefined) {
-          dispatch({ type: HIGHLIGHT_FETCH_ALL, payload: [] });
+          dispatch({ type: HIGHLIGHT_FETCH_ALL, payload: [] })
         } else {
-          dispatch({ type: HIGHLIGHT_FETCH_ALL, payload: snapshot.val() });
+          dispatch({ type: HIGHLIGHT_FETCH_ALL, payload: snapshot.val() })
         }
-      });
-  };
-};
+      })
+  }
+}
 
 export const onCreateHighlight = (name, posts, coverPost) => {
-  const { currentUser } = firebase.auth();
+  const { currentUser } = firebase.auth()
 
   return dispatch => {
     firebase
@@ -34,7 +35,7 @@ export const onCreateHighlight = (name, posts, coverPost) => {
       .then(() => {
         dispatch({
           type: HIGHLIGHT_CREATE
-        });
-      });
-  };
-};
+        })
+      })
+  }
+}
