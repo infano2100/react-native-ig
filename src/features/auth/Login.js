@@ -5,13 +5,14 @@ import {
   ActivityIndicator,
   StyleSheet,
   TouchableOpacity,
+  Image,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
 import Button from '../components/Button'
 import Input from '../components/Input'
-import Title from '../components/Title'
 import { loginUser } from '../../actions/AuthActions'
+import Images from '../../assets/images'
 
 class Login extends Component {
 
@@ -69,7 +70,7 @@ class Login extends Component {
     const { user, password } = this.state
     return (
       <View style={styles.container}>
-        <Title title="Instagram" />
+        <Image source={Images.TEXT_IG} style={styles.imgLogo} resizeMode="contain" />
         <Input placeholder="email@gmail.com" onChange={this.onChangeUser} value={user} />
         <Input
           placeholder="password"
@@ -118,5 +119,10 @@ const styles = StyleSheet.create({
   viewSingup: {
     flexDirection: 'row',
     alignSelf: 'center',
+  },
+  imgLogo: {
+    width: '100%',
+    height: 50,
+    marginBottom: 15,
   },
 })

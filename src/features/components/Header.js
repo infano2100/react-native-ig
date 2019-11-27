@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import FeatherIcons from 'react-native-vector-icons/Feather'
 import { 
   View, 
   Text, 
@@ -10,63 +9,64 @@ import {
 
 const Header = props => {
   return (
-    props.menu ?
     <View style={styles.container}>
-      <View style={styles.viewTextCancel}/>
-      <Text style={styles.textTitel}>{props.title}</Text>
-      {props.onNext ? (
+
+      {/* left */}
+      <View style={styles.viewTextCancel}>
+      { props.iconLeft ? props.iconLeft  :
+        props.onCancel ? (
+            <TouchableOpacity onPress={props.onCancel} style={styles.margin15}>
+              <View>
+                <Text>{props.textCancel}</Text>
+              </View>
+            </TouchableOpacity>
+        ) : <View/>
+        }
+      </View>
+      {/* left */}
+
+      {/* center */}
+        { props.titleCustom ? props.titleCustom :
+          <Text style={styles.textTitel}>
+            {props.title}
+          </Text>  
+        }
+      {/* center */}
+
+      {/* rigth */}
         <View style={styles.viewTextDone}>
-          <TouchableOpacity onPress={props.onNext} style={styles.margin15}>
-            <View>
-              <FeatherIcons name="menu" size={20}/>
-            </View>
-          </TouchableOpacity>
+        { props.iconRigth ? props.iconRigth :
+          props.onNext ? (
+              <TouchableOpacity onPress={props.onNext} style={styles.margin15}>
+                <View>
+                  <Text style={styles.colorBlue}>{props.textNext}</Text>
+                </View>
+              </TouchableOpacity>
+          ) : <View/>
+        }
         </View>
-      ) : null}
-    </View>
-    :
-    <View style={styles.container}>
-      {props.onCancel ? (
-        <View style={styles.viewTextCancel}>
-          <TouchableOpacity onPress={props.onCancel} style={styles.margin15}>
-            <View>
-              <Text>{props.textCancel}</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      ) : null}
-      <Text style={styles.textTitel}>
-        {props.title}
-      </Text>
-      {props.onNext ? (
-        <View style={styles.viewTextDone}>
-          <TouchableOpacity onPress={props.onNext} style={styles.margin15}>
-            <View>
-              <Text style={styles.colorBlue}>{props.textNext}</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      ) : null}
+      {/* rigth */}
+
     </View>
   )
 }
 
 Header.propTypes = {
-  menu: PropTypes.bool,
   textNext: PropTypes.string,
   textCancel: PropTypes.string,
   onCancel: PropTypes.func,
   onNext: PropTypes.func,
   showOnAction: PropTypes.bool,
+  iconLeft: PropTypes.any,
+  iconRigth: PropTypes.any,
+  titleCustom: PropTypes.any,
 }
 
 Header.defaultProps = {
-  menu: false,
   textNext: 'Next',
   textCancel: 'Cancel',
   showOnAction: true,
 }
-
 
 export default Header
 

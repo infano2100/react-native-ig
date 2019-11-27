@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import FeatherIcons from 'react-native-vector-icons/Feather'
 import { Actions } from 'react-native-router-flux'
 import Modal, { ModalContent } from 'react-native-modals'
 import firebase from '../../config/firebase'
@@ -187,27 +188,34 @@ class Profile extends Component {
       <Modal.BottomModal
           visible={this.state.bottomModal}
           onTouchOutside={() => this.setState({ bottomModal: false })}
-          height={0.8}
-          // modalStyle={{  }}
+          height={0.1}
         >
           <ModalContent
             style={{
               backgroundColor: 'fff',
-              // height: '40%',
             }}
           > 
-          {listMenu.map((val) => {
-            return (
-              <View key={val.name} style={styles.itemMenu}>
-                <TouchableOpacity onPress={val.actions}>
-                  <Text> {val.name} </Text>
-                </TouchableOpacity>
-              </View>
-            )
-          })}
-          
+            {listMenu.map((val) => {
+              return (
+                <View key={val.name} style={styles.itemMenu}>
+                  <TouchableOpacity onPress={val.actions}>
+                    <Text> {val.name} </Text>
+                  </TouchableOpacity>
+                </View>
+              )
+            })}
           </ModalContent>
         </Modal.BottomModal>
+    )
+  }
+  
+  renderIconRigth = () => {
+    return (
+      <TouchableOpacity onPress={this.showModal} style={styles.margin15}>
+        <View>
+          <FeatherIcons name="menu" size={20}/>
+        </View>
+      </TouchableOpacity>
     )
   }
 
@@ -218,7 +226,8 @@ class Profile extends Component {
         <Header 
           title={this.state.username} 
           onNext={this.showModal}
-          menu
+          iconLeft={<View style={styles.margin15}/>}
+          iconRigth={this.renderIconRigth()}
         />
        { this.renderShowModal() }
         <ScrollView contentContainerStyle={{ justifyContent: 'center' }} showsVerticalScrollIndicator={false}>
@@ -403,5 +412,8 @@ const styles = StyleSheet.create({
     height: 35, 
     borderBottomColor: '#dcdde1', 
     borderBottomWidth: 1,
+  },
+  margin15: {
+    margin: 15,
   },
 })

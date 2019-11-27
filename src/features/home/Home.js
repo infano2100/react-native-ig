@@ -4,12 +4,19 @@ import {
   View, 
   ScrollView, 
   StyleSheet,
+  TouchableOpacity,
+  Image,
 } from 'react-native'
 import { connect } from 'react-redux'
 import _ from 'lodash'
+import { Actions } from 'react-native-router-flux'
+import FeatherIcons from 'react-native-vector-icons/Feather'
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import { fetchPosts } from '../../actions/PostActions'
 import { fetchProfile } from '../../actions/ProfileActions'
 import Post from '../post/Post'
+import Header from '../components/Header'
+import Images from '../../assets/images'
 
 class Home extends Component {
   state = {
@@ -53,10 +60,43 @@ class Home extends Component {
     }
   }
 
+  renderIconLeft = () => {
+    return (
+      <View style={styles.margin15}>
+        <SimpleLineIcons name="camera" size={20}/>
+      </View>
+    )
+  }
+
+  renderIconRigth = () => {
+    return (
+      <TouchableOpacity onPress={Actions.direcd} style={styles.margin15}>
+        <View>
+          <FeatherIcons name="send" size={20}/>
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
+  renderTitle = () => {
+    return (
+      <View style={styles.margin7}>
+        <Image source={Images.TEXT_IG} style={styles.imgTitle} resizeMode="contain" />
+      </View>
+    )
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.ScrollContainer}>{this.renderPosts()}</ScrollView>
+        <Header 
+          titleCustom={this.renderTitle()}
+          iconLeft={this.renderIconLeft()}
+          iconRigth={this.renderIconRigth()}
+        />
+        <ScrollView contentContainerStyle={styles.ScrollContainer}>
+          {this.renderPosts()}
+        </ScrollView>
       </View>
     )
   }
@@ -83,5 +123,15 @@ const styles = StyleSheet.create({
   ScrollContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-  }
+  },
+  margin7: {
+    margin: 7,
+  },
+  margin15: {
+    margin: 15,
+  },
+  imgTitle: {
+    width: 90,
+    height: 40,
+  },
 })

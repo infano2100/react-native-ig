@@ -22,6 +22,7 @@ import Home from '../features/home/Home'
 import Explore from '../features/explore/Explore'
 import Profile from '../features/profile/Profile'
 import Activity from '../features/activity/Activity'
+import Direct from '../features/direct/Direct'
 
 const HomeIcon = ({focused}) =>  <IconMaterial name={focused ? "home" : "home-outline" } size={25} />
 const ExploreIcon = ({focused}) => {
@@ -40,7 +41,7 @@ const RouterComponent = (props) => (
       </Stack>
       <Stack key="app" hideNavBar panHandlers={null} initial={props.checkLogin}>
         <Tabs showLabel={false}>
-          <Scene key="home" component={Home} icon={HomeIcon} title="Instagram"/>
+          <Scene key="home" component={Home} icon={HomeIcon} hideNavBar />
           <Scene key="explore" component={Explore} icon={ExploreIcon} hideNavBar />
           <Scene key="addpost" component={AddPost} icon={AddPostIcon} hideNavBar hideTabBar />
           <Scene key="activity" component={Activity} icon={ActivityIcon} title="Activity"/>
@@ -51,6 +52,7 @@ const RouterComponent = (props) => (
         <Scene key="createHighlight" component={CreateHighlight} />
         <Scene key="editHighlight" component={EditHighlight} />
         <Scene key="highlight" component={Highlight} />
+        <Scene key="direcd" component={Direct} />
       </Stack>
     </Stack>
   </Router>

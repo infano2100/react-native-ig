@@ -4,6 +4,7 @@ const Images = {
   'HEART_IG_LIKE': require('./images/Instagram-Heart-PNG-Image.png'),
   'USER': require('./images/user.png'),
   'HEART_WITH_CIRCLE': require('./images/heart_with_circle.png'),
+  'TEXT_IG': require('./images/text_ig.png'),
 }
 
 export default Images
