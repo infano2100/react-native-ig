@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { 
-  Text, 
   View,
   StyleSheet,
   ScrollView,
@@ -8,6 +7,7 @@ import {
 import { SearchBar } from 'react-native-elements'
 import { PhotoGrid } from '../components/PhotoGrid'
 import { photos } from './Photos'
+
 export default class Explore extends Component {
 
   state = {

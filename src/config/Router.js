@@ -21,6 +21,7 @@ import ConfigPost from '../features/post/ConfigPost'
 import Home from '../features/home/Home'
 import Explore from '../features/explore/Explore'
 import Profile from '../features/profile/Profile'
+import Activity from '../features/activity/Activity'
 
 const HomeIcon = ({focused}) =>  <IconMaterial name={focused ? "home" : "home-outline" } size={25} />
 const ExploreIcon = ({focused}) => {
@@ -42,7 +43,7 @@ const RouterComponent = (props) => (
           <Scene key="home" component={Home} icon={HomeIcon} title="Instagram"/>
           <Scene key="explore" component={Explore} icon={ExploreIcon} hideNavBar />
           <Scene key="addpost" component={AddPost} icon={AddPostIcon} hideNavBar hideTabBar />
-          <Scene key="activity" component={Profile} icon={ActivityIcon} />
+          <Scene key="activity" component={Activity} icon={ActivityIcon} title="Activity"/>
           <Scene key="profile" component={Profile} icon={ProfileIcon} hideNavBar />
         </Tabs>
         <Scene key="configPost" component={ConfigPost} />

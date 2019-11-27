@@ -49,7 +49,6 @@ class PhotoGrid extends Component {
     }
 
     renderPhotoRow1(row) {
-        console.log('row', row)
         return (
             <View key={1} style={styles.alignCenter}>
                 {
