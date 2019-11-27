@@ -166,9 +166,9 @@ class Post extends Component {
     return (
       <View>
         <View style={styles.rowCenter}>
-          <Image source={{ uri: this.props.userpic }} style={styles.userPic} />
+          <Image source={{ uri: this.props.userProfile.userpic }} style={styles.userPic} />
           <View style={{ flexDirection: 'column' }}>
-            <Text style={styles.usernameTop}>{this.props.username}</Text>
+            <Text style={styles.usernameTop}>{this.props.userProfile.username}</Text>
             <Text style={styles.location}>{this.props.location}</Text>
           </View>
         </View>

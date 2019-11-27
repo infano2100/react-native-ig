@@ -13,7 +13,6 @@ import { Actions } from 'react-native-router-flux'
 import Modal, { ModalContent } from 'react-native-modals'
 import firebase from '../../config/firebase'
 import { fetchPosts } from '../../actions/PostActions'
-import { fetchProfile } from '../../actions/ProfileActions'
 import { fetchHighlights } from '../../actions/HighlightActions'
 import Button from '../components/Button'
 import Header from '../components/Header'
@@ -45,7 +44,6 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchProfile()
     this.props.fetchHighlights()
   }
 
@@ -300,7 +298,6 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { 
-    fetchProfile,
     fetchPosts, 
     fetchHighlights,
   }

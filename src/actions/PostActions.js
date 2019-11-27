@@ -33,14 +33,16 @@ export const addPost = (image, location, description) => {
   const { currentUser } = firebase.auth()
   const date = new Date().toLocaleString()
 
-  return dispatch => {
+  return (dispatch,getState) => {
+    const userProfile = getState().profile.profile
+    const { username, userpic  } = userProfile
     firebase
       .database()
       .ref(`/users/${currentUser.uid}/`)
       .child('posts')
       .push({
-        username: 'Fern',
-        userpic: 'https://men.mthai.com/app/uploads/2019/03/Fern_19.jpg',
+        username,
+        userpic,
         date: date,
         image: image,
         title: description,

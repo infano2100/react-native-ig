@@ -8,6 +8,7 @@ import {
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import { fetchPosts } from '../../actions/PostActions'
+import { fetchProfile } from '../../actions/ProfileActions'
 import Post from '../post/Post'
 
 class Home extends Component {
@@ -16,6 +17,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    this.props.fetchProfile()
     this.props.fetchPosts()
   }
 
@@ -29,7 +31,7 @@ class Home extends Component {
   }
 
   renderPosts() {
-    const { posts, isLoad } = this.state
+    const { posts } = this.state
     if (_.isEmpty(posts)) {
       return (
         <View>
@@ -41,7 +43,12 @@ class Home extends Component {
       const keysPosts = Object.keys(this.state.posts)
 
       return arrayPosts.map((post, i) => {
-        return <Post {...post} key={keysPosts[i]} postKey={keysPosts[i]} />
+        return <Post 
+          userProfile={this.props.userProfile} 
+          {...post} 
+          key={keysPosts[i]} 
+          postKey={keysPosts[i]}
+        />
       })
     }
   }
@@ -56,12 +63,16 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-  posts: state.post
+  posts: state.post,
+  userProfile: state.profile.profile,
 })
 
 export default connect(
   mapStateToProps,
-  { fetchPosts }
+  { 
+    fetchPosts,
+    fetchProfile,
+  }
 )(Home)
 
 const styles = StyleSheet.create({
