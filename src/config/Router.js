@@ -35,7 +35,10 @@ import Activity from '../features/activity/Activity'
 import Direct from '../features/direct/Direct'
 import Camera from '../features/camera/Camera'
 
-const permissionPhoto = Platform.OS === 'ios' ? PERMISSIONS.IOS.PHOTO_LIBRARY : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE
+const permissionPhoto = Platform.select({
+  android: PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+  ios: PERMISSIONS.IOS.PHOTO_LIBRARY,
+})
 
 const HomeIcon = ({focused}) =>  <IconMaterial name={focused ? "home" : "home-outline" } size={25} />
 const ExploreIcon = ({focused}) => {

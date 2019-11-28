@@ -6,12 +6,42 @@ import {
   TouchableOpacity,
   StyleSheet,
   Platform,
+  AppState,
+  Alert,
+  Linking,
 } from 'react-native'
+import Permissions from 'react-native-permissions'
+import { PERMISSIONS, RESULTS } from 'react-native-permissions'
 import { RNCamera } from 'react-native-camera'
 import { Actions } from 'react-native-router-flux'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
+
+const permissionCamera = Platform.select({
+  android: PERMISSIONS.ANDROID.CAMERA,
+  ios: PERMISSIONS.IOS.CAMERA,
+})
+
 export default class Camera extends PureComponent {
+
+  state = {
+    cameraPermission: {},
+  }
+
+  componentDidMount() {
+    this.updatePermissions()
+    AppState.addEventListener('change', this.handleAppStateChange)
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this.handleAppStateChange)
+  }
+
+  handleAppStateChange = appState => {
+    if (appState === 'active') {
+      this.updatePermissions()
+    }
+  }
 
   takePicture = async() => {
     if (this.camera) {
@@ -19,6 +49,60 @@ export default class Camera extends PureComponent {
       const data = await this.camera.takePictureAsync(options)
       console.log(data)
     }
+  }
+
+  updatePermissions = () => {
+    Permissions.check(permissionCamera)
+      .then((response) => {
+        this.setState({
+          cameraPermission: response
+        })
+      })
+  }
+  
+  checkCamera = async () => {
+    const { cameraPermission } = this.state
+    let checkPermissionCamera = true
+    if (Platform.OS === 'ios' && cameraPermission === RESULTS.DENIED || cameraPermission === RESULTS.BLOCKED) {
+      return this.alertMessage()
+    }
+  
+    await Permissions.request(permissionCamera)
+        .then(res => {
+          if (res !== RESULTS.GRANTED) {
+            this.setState({
+              cameraPermission: res
+            })
+            checkPermissionCamera = false
+          }
+        })
+      .catch(e => console.warn(e))
+  
+      if (checkPermissionCamera) {
+        this.takePicture()
+      }
+  }
+  
+  openSettings = () => {
+    const schemeAppSetting = Platform.select({
+      ios: 'app-settings:',
+      android: 'android-app://com.android.settings',
+    })
+    return Linking.openURL(schemeAppSetting)
+  }
+  
+  alertMessage = () => {
+    const textTitle = 'Would like to Access Your Camera'
+    const textDetail = 'Enable camera access so you can post pics directly from your camera'
+    const buttons = [
+      { text: 'Cancel', style: 'cancel' },
+      { text: 'Settings', onPress: this.openSettings },
+    ]
+    Alert.alert(
+      textTitle, 
+      textDetail,
+      buttons,
+    )
   }
 
   renderTakePicture = () => {
@@ -41,7 +125,7 @@ export default class Camera extends PureComponent {
           left: 16,
           right: 16,
         }}
-        onPress={this.takePicture}
+        onPress={this.checkCamera}
         useForeground
         activeOpacity={0.84}
       >
@@ -53,7 +137,7 @@ export default class Camera extends PureComponent {
   rendlerCloseHeader = () => (
     <View style={styles.closeHeaderContainer}>
       <View style={styles.closeButtonContainer}>
-        <TouchableOpacity onPress={Actions.pop}>
+        <TouchableOpacity onPress={Actions.home}>
           <Ionicons name="md-close" size={25} color="#fff"/>
         </TouchableOpacity>
       </View>

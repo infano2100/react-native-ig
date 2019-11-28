@@ -56,9 +56,11 @@
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>$(PRODUCT_NAME) wants to save photos</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Enable camera access so you can post pics directly from your camera</string>
+	<string>${PRODUCT_NAME} need access to the camera to take a photo</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This will allow receipts to be saved automatically in your photo library</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>${PRODUCT_NAME} need access to the  microphone</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Ionicons.ttf</string>
