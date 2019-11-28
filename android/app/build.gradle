@@ -181,6 +181,9 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation project(':react-native-vector-icons')
+    implementation project(':@react-native-community_cameraroll')
+    implementation project(':react-native-permissions')
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
@@ -199,3 +202,27 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+
+project.ext.vectoricons = [
+        iconFontNames: [
+                'Ionicons.ttf',
+                'FontAwesome.ttf',
+                'AntDesign.ttf',
+                'Entypo.ttf',
+                'EvilIcons.ttf',
+                'Feather.ttf',
+                'FontAwesome5_Brands.ttf',
+                'FontAwesome5_Regular.ttf',
+                'FontAwesome5_Solid.ttf',
+                'Foundation.ttf',
+                'MaterialCommunityIcons.ttf',
+                'MaterialIcons.ttf',
+                'Octicons.ttf',
+                'SimpleLineIcons.ttf',
+                'Zocial.ttf'
+        ] // Name of the font files you want to copy
+]
+
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
+

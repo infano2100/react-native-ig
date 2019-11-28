@@ -4,7 +4,8 @@ import {
   View, 
   Text, 
   TouchableOpacity, 
-  StyleSheet
+  StyleSheet,
+  Platform,
 } from 'react-native'
 
 const Header = props => {
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderBottomColor: 'grey',
     borderBottomWidth: 0.5,
-    marginTop: 20,
+    marginTop: Platform.OS === 'ios' ? 20 : 0,
   },
   viewTextDone: {
     flex:1,

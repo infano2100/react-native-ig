@@ -18,6 +18,7 @@ class AddPost extends Component {
     image: '',
     imageSelected: false,
     images: [],
+    photoPermission: {},
   }
 
   componentDidMount() {
@@ -68,7 +69,6 @@ class AddPost extends Component {
       )
     }
     
-
     return (
       <View style={styles.mainImageContainer}>
         <Image 

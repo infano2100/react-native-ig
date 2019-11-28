@@ -3,6 +3,7 @@ import {
   View,
   StyleSheet,
   ScrollView,
+  Platform,
 } from 'react-native'
 import { SearchBar } from 'react-native-elements'
 import { PhotoGrid } from '../components/PhotoGrid'
@@ -54,6 +55,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8F8F8',
   },
   marginTop30: {
-    marginTop:30,
+    marginTop: Platform.OS === 'ios' ? 30 : 0,
   },
 })
