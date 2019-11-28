@@ -33,6 +33,7 @@ import Explore from '../features/explore/Explore'
 import Profile from '../features/profile/Profile'
 import Activity from '../features/activity/Activity'
 import Direct from '../features/direct/Direct'
+import Camera from '../features/camera/Camera'
 
 const permissionPhoto = Platform.OS === 'ios' ? PERMISSIONS.IOS.PHOTO_LIBRARY : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE
 
@@ -116,6 +117,7 @@ const RouterComponent = (props) => (
         <Scene key="editHighlight" component={EditHighlight} />
         <Scene key="highlight" component={Highlight} />
         <Scene key="direcd" component={Direct} />
+        <Scene key="camera" component={Camera} />
       </Stack>
     </Stack>
   </Router>

@@ -6,10 +6,15 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  Platform,
+  Alert,
+  Linking,
 } from 'react-native'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import { Actions } from 'react-native-router-flux'
+import Permissions from 'react-native-permissions'
+import { PERMISSIONS, RESULTS } from 'react-native-permissions'
 import FeatherIcons from 'react-native-vector-icons/Feather'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import { fetchPosts } from '../../actions/PostActions'
@@ -18,14 +23,19 @@ import Post from '../post/Post'
 import Header from '../components/Header'
 import Images from '../../assets/images'
 
+const permissionCamera = Platform.OS === 'ios' ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA
+
 class Home extends Component {
   state = {
     posts: [],
+    cameraPermission: {},
+
   }
 
   componentDidMount() {
     this.props.fetchProfile()
     this.props.fetchPosts()
+    this.updatePermissions()
   }
 
 
@@ -36,6 +46,60 @@ class Home extends Component {
       }
     }
   }
+
+updatePermissions = () => {
+  Permissions.check(permissionCamera)
+    .then((response) => {
+      this.setState({
+        cameraPermission: response
+      })
+    })
+}
+
+selectCamera = async () => {
+  const { cameraPermission } = this.state
+  let checkPermission = true
+  if (Platform.OS === 'ios' && cameraPermission === RESULTS.DENIED || cameraPermission === RESULTS.BLOCKED) {
+    return this.alertMessage()
+  }
+
+  await Permissions.request(permissionCamera)
+      .then(res => {
+        if (res !== RESULTS.GRANTED) {
+          this.setState({
+            cameraPermission: res
+          })
+          checkPermission = false
+        }
+      })
+    .catch(e => console.warn(e))
+
+    if (checkPermission) {
+      return Actions.camera()
+    }
+}
+
+openSettings = () => {
+  const schemeAppSetting = Platform.select({
+    ios: 'app-settings:',
+    android: 'android-app://com.android.settings',
+  })
+  return Linking.openURL(schemeAppSetting)
+}
+
+alertMessage = () => {
+  const textTitle = 'Would like to Access Your Camera'
+  const textDetail = 'Enable camera access so you can post pics directly from your camera'
+  const buttons = [
+    { text: 'Cancel', style: 'cancel'  },
+    { text: 'Settings', onPress: this.openSettings },
+  ]
+  Alert.alert(
+    textTitle, 
+    textDetail,
+    buttons,
+  )
+}
 
   renderPosts() {
     const { posts } = this.state
@@ -62,9 +126,11 @@ class Home extends Component {
 
   renderIconLeft = () => {
     return (
-      <View style={styles.margin15}>
-        <SimpleLineIcons name="camera" size={20}/>
-      </View>
+      <TouchableOpacity onPress={this.selectCamera} style={styles.margin15}>
+        <View>
+          <SimpleLineIcons name="camera" size={20}/>
+        </View>
+      </TouchableOpacity>
     )
   }
 
