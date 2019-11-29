@@ -17,8 +17,8 @@ import Images from '../../assets/images'
 class Login extends Component {
 
   state = {
-    user: 'admin@gmail.com',
-    password: 'admin1234',
+    user: '',
+    password: '',
   }
 
   onChangeUser = text => {
